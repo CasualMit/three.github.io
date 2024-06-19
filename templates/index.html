@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Balance</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Balance Manager</h1>
+        <form method="post">
+            <input type="text" name="starting_balance" placeholder="Enter Starting Balance" required>
+            <input type="text" name="current_balance" placeholder="Enter Current Balance" required>
+            <input type="submit" value="Update Balances">
+        </form>
+        <div>
+            <h2>Starting Balance: {{ starting_balance }}</h2>
+            <h2>Current Balance: {{ current_balance }}</h2>
+        </div>
+        <div class="grid">
+            <!-- Header Row -->
+            <div class="cell header-cell">Week</div>
+            <div class="cell header-cell">Monday</div>
+            <div class="cell header-cell">Tuesday</div>
+            <div class="cell header-cell">Wednesday</div>
+            <div class="cell header-cell">Thursday</div>
+            <div class="cell header-cell">Friday</div>
+    
+            <!-- Data Rows from Flask -->
+            {% for row in grid_data %}
+                <div class="cell">{{ row[0] }}</div> <!-- Week number -->
+                {% for value in row[1:] %}
+                    <div class="cell {% if value < current_balance %}green-cell{% endif %}">{{ value|round(2) }}</div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+    
+    
+    
+</body>
+</html>
